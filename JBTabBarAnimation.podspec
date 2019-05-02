@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'JBTabBarAnimation'
-  s.version          = '0.1.0'
+  s.version          = '1.0.0'
   s.summary          = 'A custom animation for TabBarController'
 
 # This description is used to generate tags and improve search results.
@@ -29,7 +29,7 @@ JBTabBarAnimation is a custom animation library for TabBarController developed i
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '11.0'
-  s.swift_version   = '4.2'
+  s.swift_versions   = ['4.2']
 
   s.source_files = 'JBTabBarAnimation/Classes/*.swift'
   
