@@ -22,7 +22,7 @@ pod 'JBTabBarAnimation'
 
 ## Author
 
-jithinpala, jithin.balan@outware.com.au
+Jithin Balan, jithinpala@gmail.com
 
 ## License
 

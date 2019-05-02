@@ -1,0 +1,6 @@
+framework module Pods_JBTabBarAnimation_Example {
+  umbrella header "Pods-JBTabBarAnimation_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

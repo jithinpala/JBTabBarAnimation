@@ -1,0 +1,16 @@
+PODS:
+  - JBTabBarAnimation (0.1.0)
+
+DEPENDENCIES:
+  - JBTabBarAnimation (from `../`)
+
+EXTERNAL SOURCES:
+  JBTabBarAnimation:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  JBTabBarAnimation: 2072a4c358e5daee14a869b5947c94b35023a08b
+
+PODFILE CHECKSUM: 008526dcdf914cbbed01a9ab371a1c417e5d46a0
+
+COCOAPODS: 1.6.1
