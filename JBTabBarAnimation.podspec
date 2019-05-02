@@ -29,7 +29,7 @@ JBTabBarAnimation is a custom animation library for TabBarController developed i
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '11.0'
-  s.swift_versions   = ['4.2']
+  s.swift_version   = '4.2'
 
   s.source_files = 'JBTabBarAnimation/Classes/*.swift'
   
