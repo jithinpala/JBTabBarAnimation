@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'JBTabBarAnimation_Example' do
+  pod 'JBTabBarAnimation', :path => '../'
+
+  target 'JBTabBarAnimation_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
