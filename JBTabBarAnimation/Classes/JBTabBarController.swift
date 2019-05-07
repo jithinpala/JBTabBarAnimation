@@ -31,10 +31,12 @@ public class JBTabBarController: UITabBarController {
                     showItemLabel(for: tabBarItemView, isHidden: true)
                     createRoundLayer(for: tabBarItemView)
                     customTabBar.curveAnimation(for: selectedIndex)
+                    shouldDisableUserInteraction(for: false)
                     UIView.animate(withDuration: 0.9, delay: 0.0, usingSpringWithDamping: 0.57, initialSpringVelocity: 0.0, options: .curveEaseInOut, animations: {
                         tabBarItemView.frame = CGRect(x: tabBarItemView.frame.origin.x, y: tabBarItemView.frame.origin.y - 1, width: tabBarItemView.frame.width, height: tabBarItemView.frame.height)
                     }, completion: { _ in
                         customTabBar.finishAnimation()
+                        self.shouldDisableUserInteraction(for: true)
                     })
                 } else if priviousSelectedIndex == firstIndex {
                     showItemLabel(for: tabBarItemView, isHidden: false)
@@ -73,6 +75,10 @@ public class JBTabBarController: UITabBarController {
             let buttonLabel = itemLabel as? UILabel {
             buttonLabel.isHidden = isHidden
         }
+    }
+    
+    private func shouldDisableUserInteraction(for status: Bool) {
+        tabBar.isUserInteractionEnabled = status
     }
 
 }
