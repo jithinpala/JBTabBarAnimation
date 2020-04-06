@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class JBTabBar: UITabBar {
+open class JBTabBar: UITabBar {
 
     private let tabBarCurveShapeLayer = CAShapeLayer()
     private struct Constants {

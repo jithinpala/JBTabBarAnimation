@@ -7,22 +7,22 @@
 
 import UIKit
 
-public class JBTabBarController: UITabBarController {
+open class JBTabBarController: UITabBarController {
 
     var priviousSelectedIndex: Int = -1
     
-    override public func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    override public func viewDidAppear(_ animated: Bool) {
+    open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let item = self.tabBar.selectedItem {
             self.tabBar(self.tabBar, didSelect: item)
         }
     }
     
-    override public func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+    open override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if let items = self.tabBar.items, let selectedIndex = items.firstIndex(of: item), priviousSelectedIndex != selectedIndex, let customTabBar = tabBar as? JBTabBar {
             let tabBarItemViews = self.tabBarItemViews()
             tabBarItemViews.forEach { tabBarItemView in
