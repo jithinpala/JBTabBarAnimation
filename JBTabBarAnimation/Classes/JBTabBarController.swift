@@ -11,6 +11,8 @@ open class JBTabBarController: UITabBarController {
 
     var priviousSelectedIndex: Int = -1
     
+    open var circleColor = UIColor.white
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -28,20 +30,20 @@ open class JBTabBarController: UITabBarController {
             tabBarItemViews.forEach { tabBarItemView in
                 let firstIndex = tabBarItemViews.firstIndex(of: tabBarItemView)
                 if selectedIndex == firstIndex {
-                    showItemLabel(for: tabBarItemView, isHidden: true)
-                    createRoundLayer(for: tabBarItemView)
+                    showItemLabel(for: selectedIndex, isHidden: true)
+                    createRoundLayer(for: tabBarItemView, at: selectedIndex)
                     customTabBar.curveAnimation(for: selectedIndex)
                     shouldDisableUserInteraction(for: false)
-                    UIView.animate(withDuration: 0.9, delay: 0.0, usingSpringWithDamping: 0.57, initialSpringVelocity: 0.0, options: .curveEaseInOut, animations: {
+                    UIView.animate(withDuration: 0.7, delay: 0.0, usingSpringWithDamping: 0.57, initialSpringVelocity: 0.0, options: .curveEaseInOut, animations: {
                         tabBarItemView.frame = CGRect(x: tabBarItemView.frame.origin.x, y: tabBarItemView.frame.origin.y - 1, width: tabBarItemView.frame.width, height: tabBarItemView.frame.height)
                     }, completion: { _ in
                         customTabBar.finishAnimation()
                         self.shouldDisableUserInteraction(for: true)
                     })
                 } else if priviousSelectedIndex == firstIndex {
-                    showItemLabel(for: tabBarItemView, isHidden: false)
+                    showItemLabel(for: priviousSelectedIndex, isHidden: false)
                     removeBarItemCircleLayer(barItemView: tabBarItemView)
-                    UIView.animate(withDuration: 0.9, delay: 0.0, usingSpringWithDamping: 0.57, initialSpringVelocity: 0.0, options: .curveEaseInOut, animations: {
+                    UIView.animate(withDuration: 0.7, delay: 0.0, usingSpringWithDamping: 0.57, initialSpringVelocity: 0.0, options: .curveEaseInOut, animations: {
                         tabBarItemView.frame = CGRect(x: tabBarItemView.frame.origin.x, y: tabBarItemView.frame.origin.y + 1, width: tabBarItemView.frame.width, height: tabBarItemView.frame.height)
                     }, completion: nil)
                 }
@@ -61,18 +63,17 @@ open class JBTabBarController: UITabBarController {
         }
     }
     
-    private func createRoundLayer(for tabBarItemView: UIView) {
-        if let itemImageView = (tabBarItemView.subviews.filter { $0 is UIImageView }.first) {
+    private func createRoundLayer(for tabBarItemView: UIView, at index: Int) {
+        if let itemImageView = tabBar.imageView(at: index) {
             let circle = CircleLayer()
+            circle.circleColor = circleColor
             circle.positionValue = itemImageView.center
             tabBarItemView.layer.addSublayer(circle.createCircle())
         }
     }
     
-    private func showItemLabel(for tabBarItemView: UIView, isHidden: Bool) {
-        if let itemLabel = (tabBarItemView.subviews.filter{ $0 is UILabel }.first),
-            itemLabel is UILabel,
-            let buttonLabel = itemLabel as? UILabel {
+    private func showItemLabel(for index: Int, isHidden: Bool) {
+        if let buttonLabel = tabBar.titleLabel(at: index) {
             buttonLabel.isHidden = isHidden
         }
     }
@@ -80,5 +81,4 @@ open class JBTabBarController: UITabBarController {
     private func shouldDisableUserInteraction(for status: Bool) {
         tabBar.isUserInteractionEnabled = status
     }
-
 }

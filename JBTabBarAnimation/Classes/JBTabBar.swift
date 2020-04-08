@@ -17,16 +17,21 @@ open class JBTabBar: UITabBar {
     var selectedIndex: Int = 0
     
     var startPoint: CGPoint {
-        let itemWidth = self.bounds.width / CGFloat(items?.count ?? 0)
-        let startXPoint = (itemWidth * CGFloat(selectedIndex)) + (itemWidth / 2)
-        return CGPoint(x: startXPoint - 41, y: 0)
+        var startXPoint: CGFloat = 0
+        let selectedItem = self.subviews[selectedIndex]
+        if let itemImageView = self.imageView(at: selectedIndex) {
+            startXPoint = selectedItem.frame.origin.x + itemImageView.center.x - 41
+        }
+        return CGPoint(x: startXPoint, y: 0)
     }
     
     private var diameter: CGFloat = 72
     
     override public func draw(_ rect: CGRect) {
         super.draw(rect)
-        self.setupTabBar()
+        DispatchQueue.main.async {
+            self.setupTabBar()
+        }
     }
     
     func setupTabBar() {
@@ -41,10 +46,10 @@ open class JBTabBar: UITabBar {
         tabBarCurveShapeLayer.strokeColor = UIColor.white.cgColor
         tabBarCurveShapeLayer.path = createPathForTabBar().cgPath
         self.layer.insertSublayer(tabBarCurveShapeLayer, at: 0)
-        
     }
     
     private func createPathForTabBar() -> UIBezierPath {
+        let startPoint = self.startPoint
         let path = UIBezierPath()
         path.move(to: CGPoint(x: 0, y: 0))
         path.addLine(to: startPoint)
@@ -79,7 +84,7 @@ open class JBTabBar: UITabBar {
         let pathAnimation = CASpringAnimation(keyPath: "path")
         pathAnimation.damping = 100
         pathAnimation.toValue = createPathForTabBar().cgPath
-        pathAnimation.duration = 0.9
+        pathAnimation.duration = 0.7
         pathAnimation.fillMode = .forwards
         pathAnimation.isRemovedOnCompletion = false
         pathAnimation.autoreverses = false
@@ -91,4 +96,26 @@ open class JBTabBar: UITabBar {
         tabBarCurveShapeLayer.path = createPathForTabBar().cgPath
     }
 
+}
+
+extension UITabBar {
+    func imageView(at index: Int) -> UIImageView? {
+        let selectedView = self.subviews[index]
+        if let imageView = (((selectedView.subviews.filter { $0 is UIVisualEffectView }.first) as? UIVisualEffectView)?.contentView.subviews.filter { $0 is UIImageView }.first as? UIImageView) {
+            return imageView
+        } else if let imageView = (selectedView.subviews.filter { $0 is UIImageView }.first as? UIImageView) {
+            return imageView
+        }
+        return nil
+    }
+    
+    func titleLabel(at index: Int) -> UILabel? {
+        let selectedView = self.subviews[index]
+        if let titleLabel = (((selectedView.subviews.filter { $0 is UIVisualEffectView }.first) as? UIVisualEffectView)?.contentView.subviews.filter { $0 is UILabel }.first as? UILabel) {
+            return titleLabel
+        } else if let titleLabel = (selectedView.subviews.filter { $0 is UILabel }.first as? UILabel) {
+            return titleLabel
+        }
+        return nil
+    }
 }

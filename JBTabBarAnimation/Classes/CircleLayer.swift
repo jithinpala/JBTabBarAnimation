@@ -10,6 +10,7 @@ import UIKit
 
 open class CircleLayer: CAShapeLayer {
     
+    var circleColor = UIColor.white
     var positionValue: CGPoint = .zero
     private var radiusValue: CGFloat = 25
     
@@ -22,7 +23,7 @@ open class CircleLayer: CAShapeLayer {
     }
     
     func createCircle() -> CircleLayer {
-        fillColor = UIColor.white.cgColor
+        fillColor = circleColor.cgColor
         path = createPath()
         return self
     }
