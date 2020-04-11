@@ -25,6 +25,10 @@ open class CircleLayer: CAShapeLayer {
     func createCircle() -> CircleLayer {
         fillColor = circleColor.cgColor
         path = createPath()
+        shadowColor = UIColor.lightGray.cgColor
+        shadowOffset = .zero
+        shadowOpacity = 0.3
+        shadowRadius = 3
         return self
     }
     

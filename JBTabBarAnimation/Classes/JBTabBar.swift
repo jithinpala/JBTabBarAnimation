@@ -9,7 +9,10 @@ import UIKit
 
 open class JBTabBar: UITabBar {
 
+    let tabBarShadowCurveShapeLayer = CAShapeLayer()
+    
     private let tabBarCurveShapeLayer = CAShapeLayer()
+    
     private struct Constants {
         static let itemWidth = 60
     }
@@ -46,6 +49,13 @@ open class JBTabBar: UITabBar {
         tabBarCurveShapeLayer.strokeColor = UIColor.white.cgColor
         tabBarCurveShapeLayer.path = createPathForTabBar().cgPath
         self.layer.insertSublayer(tabBarCurveShapeLayer, at: 0)
+        
+        tabBarShadowCurveShapeLayer.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
+        tabBarShadowCurveShapeLayer.shadowColor = UIColor.lightGray.cgColor
+        tabBarShadowCurveShapeLayer.shadowOffset = .zero
+        tabBarShadowCurveShapeLayer.shadowOpacity = 0.3
+        tabBarShadowCurveShapeLayer.shadowRadius = 3
+        self.layer.insertSublayer(tabBarShadowCurveShapeLayer, at: 0)
     }
     
     private func createPathForTabBar() -> UIBezierPath {
@@ -72,7 +82,6 @@ open class JBTabBar: UITabBar {
         path.addLine(to: CGPoint(x: 0, y: 0))
         
         return path
-        
     }
     
     func curveAnimation(for index: Int) {
@@ -81,19 +90,23 @@ open class JBTabBar: UITabBar {
     }
     
     private func curveAnimation() {
+        let path = createPathForTabBar().cgPath
         let pathAnimation = CASpringAnimation(keyPath: "path")
         pathAnimation.damping = 100
-        pathAnimation.toValue = createPathForTabBar().cgPath
+        pathAnimation.toValue = path
         pathAnimation.duration = 0.7
         pathAnimation.fillMode = .forwards
         pathAnimation.isRemovedOnCompletion = false
         pathAnimation.autoreverses = false
         pathAnimation.repeatCount = 0
         tabBarCurveShapeLayer.add(pathAnimation, forKey: "pathAnimation")
+        
+        tabBarShadowCurveShapeLayer.add(pathAnimation, forKey: "pathAnimation")
     }
     
     func finishAnimation() {
         tabBarCurveShapeLayer.path = createPathForTabBar().cgPath
+        tabBarShadowCurveShapeLayer.path = createPathForTabBar().cgPath
     }
 
 }
